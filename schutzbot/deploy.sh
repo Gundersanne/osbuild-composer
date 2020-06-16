@@ -72,6 +72,21 @@ fi
 # Start services.
 sudo systemctl enable --now osbuild-composer.socket
 
+if [[ $ID == rhel ]]; then
+    # generate composer-key-pair and worker-key-pair
+    sudo mkdir -p /etc/osbuild-composer
+    sudo openssl req -new -nodes -x509 -days 365 -keyout /etc/osbuild-composer/ca-key.pem -out /etc/osbuild-composer/ca-crt.pem -subj "/CN=osbuild.org"
+    sudo openssl genrsa -out /etc/osbuild-composer/composer-key.pem 2048
+    sudo openssl req -new -sha256 -key /etc/osbuild-composer/composer-key.pem	-out /etc/osbuild-composer/composer-csr.pem -subj "/CN=localhost"
+    sudo openssl x509 -req -in /etc/osbuild-composer/composer-csr.pem  -CA /etc/osbuild-composer/ca-crt.pem -CAkey /etc/osbuild-composer/ca-key.pem -CAcreateserial -out /etc/osbuild-composer/composer-crt.pem
+    sudo chown _osbuild-composer:_osbuild-composer /etc/osbuild-composer/composer-key.pem /etc/osbuild-composer/composer-csr.pem /etc/osbuild-composer/composer-crt.pem
+    sudo openssl genrsa -out /etc/osbuild-composer/worker-key.pem 2048
+    sudo openssl req -new -sha256 -key /etc/osbuild-composer/worker-key.pem	-out /etc/osbuild-composer/worker-csr.pem -subj "/CN=localhost"
+    sudo openssl x509 -req -in /etc/osbuild-composer/worker-csr.pem  -CA /etc/osbuild-composer/ca-crt.pem -CAkey /etc/osbuild-composer/ca-key.pem -CAcreateserial -out /etc/osbuild-composer/worker-crt.pem
+
+    sudo systemctl enable --now osbuild-composer-cloud.socket
+fi
+
 # Verify that the API is running.
 sudo composer-cli status show
 sudo composer-cli sources list
