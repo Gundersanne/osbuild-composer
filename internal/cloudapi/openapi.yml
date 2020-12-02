@@ -65,12 +65,8 @@ components:
   schemas:
     ComposeStatus:
       required:
-        - status
+        - image_statuses
       properties:
-        status:
-          type: string
-          enum: ['success', 'failure', 'pending', 'running']
-          example: 'success'
         image_statuses:
           type: array
           items:
@@ -81,15 +77,26 @@ components:
       properties:
         status:
           type: string
-          enum: ['success', 'failure', 'pending', 'building', 'uploading', 'registering']
+          enum: ['success', 'failure', 'pending', 'building', 'uploading']
           example: 'success'
         upload_statuses:
           type: array
           items:
             $ref: '#/components/schemas/UploadStatus'
     UploadStatus:
-      oneOf:
-       - $ref: '#/components/schemas/AWSUploadStatus'
+      required:
+        - status
+        - type
+        - options
+      properties:
+        status:
+          type: string
+          enum: ['success', 'failure']
+        type:
+          $ref: '#/components/schemas/UploadTypes'
+        options:
+          oneOf:
+            - $ref: '#/components/schemas/AWSUploadStatus'
     AWSUploadStatus:
       type: object
       properties:
@@ -158,11 +165,13 @@ components:
         - options
       properties:
         type:
-          type: string
-          enum: ['aws']
+          $ref: '#/components/schemas/UploadTypes'
         options:
           oneOf:
             -  $ref: '#/components/schemas/AWSUploadRequestOptions'
+    UploadTypes:
+      type: string
+      enum: ['aws']
     AWSUploadRequestOptions:
       type: object
       required:
