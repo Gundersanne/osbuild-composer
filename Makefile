@@ -113,6 +113,7 @@ build:
 	go build -o bin/osbuild-worker ./cmd/osbuild-worker/
 	go build -o bin/osbuild-pipeline ./cmd/osbuild-pipeline/
 	go build -o bin/osbuild-upload-azure ./cmd/osbuild-upload-azure/
+	go build -o bin/osbuild-upload-google ./cmd/osbuild-upload-google/
 	go build -o bin/osbuild-upload-aws ./cmd/osbuild-upload-aws/
 	go test -c -tags=integration -o bin/osbuild-composer-cli-tests ./cmd/osbuild-composer-cli-tests/main_test.go
 	go test -c -tags=integration -o bin/osbuild-weldr-tests ./internal/client/

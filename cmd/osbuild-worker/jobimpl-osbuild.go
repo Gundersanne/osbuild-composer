@@ -18,6 +18,7 @@ import (
 	"github.com/osbuild/osbuild-composer/internal/target"
 	"github.com/osbuild/osbuild-composer/internal/upload/awsupload"
 	"github.com/osbuild/osbuild-composer/internal/upload/azure"
+	"github.com/osbuild/osbuild-composer/internal/upload/google"
 	"github.com/osbuild/osbuild-composer/internal/upload/koji"
 	"github.com/osbuild/osbuild-composer/internal/upload/vmware"
 	"github.com/osbuild/osbuild-composer/internal/worker"
@@ -190,6 +191,8 @@ func (impl *OSBuildJobImpl) Run(job worker.Job) error {
 				r = append(r, err)
 				continue
 			}
+		case *target.GoogleTargetOptions:
+			fmt.Println(google.Google{})
 		case *target.KojiTargetOptions:
 			// Koji for some reason needs TLS renegotiation enabled.
 			// Clone the default http transport and enable renegotiation.

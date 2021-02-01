@@ -3,6 +3,7 @@ module github.com/osbuild/osbuild-composer
 go 1.13
 
 require (
+	cloud.google.com/go/storage v1.12.0
 	github.com/Azure/azure-sdk-for-go v41.3.0+incompatible
 	github.com/Azure/azure-storage-blob-go v0.11.1-0.20201209121048-6df5d9af221d
 	github.com/Azure/go-autorest/autorest v0.10.0
@@ -16,8 +17,8 @@ require (
 	github.com/deepmap/oapi-codegen v1.3.12
 	github.com/go-chi/chi v4.0.2+incompatible
 	github.com/gobwas/glob v0.2.3
-	github.com/google/go-cmp v0.3.1
-	github.com/google/uuid v1.1.1
+	github.com/google/go-cmp v0.5.4
+	github.com/google/uuid v1.1.2
 	github.com/gophercloud/gophercloud v0.11.0
 	github.com/julienschmidt/httprouter v1.2.0
 	github.com/kolo/xmlrpc v0.0.0-20200310150728-e0350524596b
@@ -25,6 +26,6 @@ require (
 	github.com/stretchr/testify v1.5.1
 	github.com/ubccr/kerby v0.0.0-20170626144437-201a958fc453
 	github.com/vmware/govmomi v0.23.0
-	golang.org/x/net v0.0.0-20200202094626-16171245cfb2 // indirect
-	golang.org/x/sys v0.0.0-20200828194041-157a740278f4
+	golang.org/x/sys v0.0.0-20210104204734-6f8348627aad
+	google.golang.org/api v0.38.0
 )
