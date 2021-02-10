@@ -21,10 +21,22 @@ type OSBuildJob struct {
 }
 
 type OSBuildJobResult struct {
-	Success       bool            `json:"success"`
-	OSBuildOutput *osbuild.Result `json:"osbuild_output,omitempty"`
-	TargetErrors  []string        `json:"target_errors,omitempty"`
-	UploadStatus  string          `json:"upload_status"`
+	Success       bool                    `json:"success"`
+	OSBuildOutput *osbuild.Result         `json:"osbuild_output,omitempty"`
+	TargetResults []*target.TargetResult  `json:"target_results,omitempty"`
+	TargetErrors  []string                `json:"target_errors,omitempty"`
+	UploadStatus  string                  `json:"upload_status"`
+}
+
+type TargetResult struct {
+        Type string `json:"type"` // aws, gcp, azure, ....
+        Data interface{} `json:"data"` //cast this to a specific result depending on the type
+}
+
+/* if targetResult.Type == "aws" { targetResult.Data.(TargetAWSResult).Ami } */
+type TargetAWSResult struct {
+	Ami string `json:"ami"`
+	Region string `json:"region"`
 }
 
 type KojiInitJob struct {
